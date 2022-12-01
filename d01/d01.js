@@ -11,9 +11,8 @@ let readTotalCals = function (pack) {
     return totalCals
 }
 
+let t0 = new Date();
 
-
-console.log("reading inputs")
 let calories = fs
 	.readFileSync(path.join(__dirname, filename), 'utf8')
 	.toString()
@@ -32,13 +31,14 @@ for (let i = 0; i<3; i++){
     snackSum += calories[i];
 }
 
-console.log(snackSum)
+let t1 = new Date();
 
 let p1 = calories[0];
 let p2 = snackSum;
+let t = t1.getTime() - t0.getTime();
 
 module.exports = {
-    p1,p2
+    p1,p2,t
 };
 
 

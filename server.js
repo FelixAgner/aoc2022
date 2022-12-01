@@ -4,14 +4,16 @@ var fs = require('fs');
 
 let getSolution = function(query) {
     day = query.day.length > 1 ? "d" + query.day : "d0"+query.day
-    let {p1,p2} = require(`./${day}/${day}`);
-    return {p1 : p1, p2 : p2};
+    let {p1,p2,t} = require(`./${day}/${day}`);
+    return {p1 : p1, p2 : p2, t: t};
 }
 
 
 let handleRequest = function(req,res) {
     var q = url.parse(req.url,true);
-
+    console.log(q.pathname)
+    console.log(q.search)
+    console.log(JSON.stringify(q))
     if (q.pathname == '/') {
         fs.readFile('index.html', function(err, data) {
             res.writeHead(200, {'Content-Type': 'text/html'});
@@ -33,6 +35,7 @@ let handleRequest = function(req,res) {
             <p>Day ${query.day}</p>
             <p>Result 1: ${result.p1}</p>
             <p>Result 2: ${result.p2}</p>
+            <p>Time (ms): ${result.t}</p>
             </body>
             </html>`);
         return res.end();
