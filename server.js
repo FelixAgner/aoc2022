@@ -11,9 +11,7 @@ let getSolution = function(query) {
 
 let handleRequest = function(req,res) {
     var q = url.parse(req.url,true);
-    console.log(q.pathname)
-    console.log(q.search)
-    console.log(JSON.stringify(q))
+    console.log(`Request ${req.url} received.`)
     if (q.pathname == '/') {
         fs.readFile('index.html', function(err, data) {
             res.writeHead(200, {'Content-Type': 'text/html'});
