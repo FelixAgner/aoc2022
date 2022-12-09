@@ -69,9 +69,7 @@ for (command of commands) {
     let l = stacks[command.from].length;
     let boxes = stacks[command.from].slice(l-command.nbr,l);
     stacks[command.from] = stacks[command.from].slice(0,l-command.nbr);
-    console.log(boxes);
     stacks[command.to].push(...boxes);
-    console.log(stacks[command.to]);
 }
 
 // Part 2
