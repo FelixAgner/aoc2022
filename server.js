@@ -4,7 +4,7 @@ const fs = require('fs');
 const {makeErrorPage} = require('./makeErrorPage') 
 
 let getSolution = function(query) {
-    day = query.day.length > 1 ? "d" + query.day : "d0"+query.day
+    let day = query > 10 ? "d" + query : "d0"+query
     let {p1,p2,t} = require(`./${day}/${day}`);
     return {p1 : p1, p2 : p2, t: t};
 }
@@ -37,12 +37,12 @@ let handleRequest = function(req,res) {
         } else {
 
             try {
-                result = getSolution(query);
+                result = getSolution(day);
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.write(`<html>
                     <body>
                     <h1>Advent of Code!</h1>
-                    <p>Day ${query.day}</p>
+                    <p>Day ${day}</p>
                     <p>Result 1: ${result.p1}</p>
                     <p>Result 2: ${result.p2}</p>
                     <p>Time (ms): ${result.t}</p>
