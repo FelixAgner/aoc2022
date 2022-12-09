@@ -13,7 +13,6 @@ class Knot {
         };
         this.depth = depth;
         this.visited = {"0:0":true};
-        this.nvisited = 1;
         this.tail = depth > 1 ? new Knot(depth-1) : undefined;
     }
 
@@ -21,7 +20,7 @@ class Knot {
         if (this.depth > 1) {
             return this.tail.getVisited();
         } else {
-            return this.nvisited;
+            return Object.keys(this.visited).length;
         }
     }
 
@@ -42,10 +41,7 @@ class Knot {
             if (this.depth > 1 ) {
                 this.tail.catchup(this.head.x,this.head.y);
             } else {
-                if (this.visited[this.coordinateString()] == undefined) {
-                    this.visited[this.coordinateString()] = true;
-                    this.nvisited++;
-                } 
+                this.visited[this.coordinateString()] = true;
             }
         }
 
