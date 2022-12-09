@@ -1,4 +1,3 @@
-const { timeStamp } = require('console');
 const fs = require('fs');
 const path = require('path');
 const {Knot} = require('./knot')
@@ -23,7 +22,7 @@ for (command of commands){
     rope1.move(command);
 }
 p1 = rope1.getVisited();
-console.log(p1);
+console.log(`Solution to part 1: ${p1}`);
 
 //Part 2
 let rope2 = new Knot(10);
@@ -31,11 +30,12 @@ for (command of commands){
     rope2.move(command);
 }
 p2 = rope2.getVisited();
-console.log(p2);
+console.log(`Solution to part 2: ${p2}`);
 
 // End timer
 let t1 = new Date();
 let t = t1.getTime() - t0.getTime();
+console.log(`Solution time: ${t} ms`);
 
 module.exports = {
     p1, // Part 1
