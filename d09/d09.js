@@ -18,17 +18,13 @@ let commands = fs
 
 //Part 1
 let rope1 = new Knot(2);
-for (command of commands){
-    rope1.move(command);
-}
+commands.forEach(command => rope1.move(command));
 p1 = rope1.getVisited();
 console.log(`Solution to part 1: ${p1}`);
 
 //Part 2
 let rope2 = new Knot(10);
-for (command of commands){
-    rope2.move(command);
-}
+commands.forEach(command => rope2.move(command));
 p2 = rope2.getVisited();
 console.log(`Solution to part 2: ${p2}`);
 
