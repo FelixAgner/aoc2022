@@ -121,7 +121,6 @@ for (let round = 0 ; round < 10000 ; round++) {
             let worryLevel = itemLists[monkey].pop();
             worryLevel = operations[monkey](worryLevel);
             worryLevel = worryLevel % scd;
-            //worryLevel = Math.floor(worryLevel/3);
             if (worryLevel % tests[monkey] == 0) {
                 itemLists[trueMonkeys[monkey]].push(worryLevel);
             } else {
@@ -131,7 +130,6 @@ for (let round = 0 ; round < 10000 ; round++) {
     } 
 }
 fiddleingCount.sort(function(a, b){return b - a});
-console.log(fiddleingCount);
 
 let p2 = fiddleingCount[0]*fiddleingCount[1];
 console.log(`Solution to part 2: \n${p2}`);
