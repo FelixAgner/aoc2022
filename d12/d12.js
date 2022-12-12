@@ -34,13 +34,16 @@ let makeGrid = function(textGrid) {
     return [start, goal, grid];
 }
 
-let queueOrder = function(e1,e2) {
-    return e1[0] < e2[0]
+let isInBounds = function(x,y,nx,ny) {
+    return x >= 0 && 
+    x < nx && 
+    y >= 0 && 
+    y < ny;
 }
 
-let dijkstra = function(start, goal, grid) {
+let dfs = function(start, grid, isGoal, isOkStep) {
     let q = [
-        [0, start]
+        start
     ] // priority queue
     
     let nx = grid.length;
@@ -53,63 +56,22 @@ let dijkstra = function(start, goal, grid) {
     c[start[0]][start[1]] = 0;
 
     while (q.length > 0) {
-        let [oldcost, [x,y]] = q.pop();        
-        if (x == goal[0] && y == goal[1]) {
+        let [x,y] = q.shift();        
+        if (isGoal(x,y,grid)) {
             return c[x][y];
         }
-        height = grid[x][y];
 
         for ([xnew,ynew] of [[x+1,y], [x-1,y], [x,y+1], [x,y-1]]) {
-            if (xnew >= 0 && 
-                xnew < nx && 
-                ynew >= 0 && 
-                ynew < ny && 
-                grid[xnew][ynew] <= height+1 &&
+            if (isInBounds(xnew,ynew,nx,ny) &&
+                isOkStep(x,y,xnew,ynew,grid) &&
                 c[x][y]+1 < c[xnew][ynew] ){
                     c[xnew][ynew] = c[x][y]+1;
-                    q.push([c[xnew][ynew], [xnew,ynew]]);
+                    q.push([xnew,ynew]);
                 }
             
         }
-        q.sort( (a,b) => b[0] - a[0]);
     }
-}
-
-let dijkstra2ElectricBoogaloo = function(start, grid) {
-    let q = [
-        [0, start]
-    ] // priority queue
-    
-    let nx = grid.length;
-    let ny = grid[0].length;
-
-    let c = new Array(nx);
-    for (let i = 0 ; i < nx ; i++) {
-        c[i] = new Array(ny).fill(Infinity);
-    }
-    c[start[0]][start[1]] = 0;
-
-    while (q.length > 0) {
-        let [oldcost, [x,y]] = q.pop();        
-        if (grid[x][y] == 0) {
-            return c[x][y];
-        }
-        height = grid[x][y];
-
-        for ([xnew,ynew] of [[x+1,y], [x-1,y], [x,y+1], [x,y-1]]) {
-            if (xnew >= 0 && 
-                xnew < nx && 
-                ynew >= 0 && 
-                ynew < ny && 
-                grid[xnew][ynew] >= height -1 &&
-                c[x][y]+1 < c[xnew][ynew] ){
-                    c[xnew][ynew] = c[x][y]+1;
-                    q.push([c[xnew][ynew], [xnew,ynew]]);
-                }
-            
-        }
-        q.sort( (a,b) => b[0] - a[0]);
-    }
+    return Infinity;
 }
 
 // Read input
@@ -121,15 +83,23 @@ let textGrid = fs
         (line) => line.split("")
     );
 
+// Convert to numerical grid for some convenience.
 let [start,goal,grid] = makeGrid(textGrid);
 
 // Part 1
-let p1 = dijkstra(start, goal, grid);
+let p1 = dfs(start,
+    grid,
+    (x,y,grid) => x == goal[0] && y == goal[1],
+    (x,y,xnew,ynew,grid) => grid[xnew][ynew] <= grid[x][y]+1);
 console.log(`Solution to part 1: ${p1}`);
 
 
 //Part 2
-let p2 = dijkstra2ElectricBoogaloo(goal,grid);
+// Search backwards from the goal to find the closest point of height 0.
+let p2 = dfs(goal,
+    grid,
+    (x,y,grid) => grid[x][y] == 0,
+    (x,y,xnew,ynew,grid) => grid[xnew][ynew] >= grid[x][y]-1);
 console.log(`Solution to part 2: ${p2}`);
 
 
