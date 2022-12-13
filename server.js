@@ -4,7 +4,7 @@ const fs = require('fs');
 const {makeErrorPage} = require('./makeErrorPage') 
 
 let getSolution = function(query) {
-    let day = query > 10 ? "d" + query : "d0"+query
+    let day = query >= 10 ? "d" + query : "d0"+query
     let {p1,p2,t} = require(`./${day}/${day}`);
     return {p1 : p1, p2 : p2, t: t};
 }
