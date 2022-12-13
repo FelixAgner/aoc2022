@@ -44,7 +44,7 @@ let isInBounds = function(x,y,nx,ny) {
 let dfs = function(start, grid, isGoal, isOkStep) {
     let q = [
         start
-    ] // priority queue
+    ]
     
     let nx = grid.length;
     let ny = grid[0].length;
