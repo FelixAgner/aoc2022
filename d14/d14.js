@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const { addListener } = require('process');
 
-//let filename = 'input.txt';
 let filename = 'input.txt';
 
 
@@ -59,7 +58,7 @@ let falling = {
 };
 let nGrains = 0;
 
-while (falling.y < cave.depth+2) {
+while (falling.y != cave.depth+1) {
     if (cave.unBlocked[falling.x][falling.y+1]) {
         falling.y++;
     } else if (cave.unBlocked[falling.x-1][falling.y+1] ) {
@@ -75,16 +74,15 @@ while (falling.y < cave.depth+2) {
         falling.y = 0;
     }
 }
-
+cave.unBlocked[falling.x][falling.y] = false;
 let p1 = nGrains;
 console.log(`Solution to part 1: ${p1}`);
 
 
 //Part 2
-cave = makeCave(input);
+nGrains++;
 falling.x = 500;
 falling.y = 0;
-nGrains = 0;
 
 while (cave.unBlocked[500][0]) {
     if (falling.y == cave.depth+1){
