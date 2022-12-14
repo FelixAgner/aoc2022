@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { addListener } = require('process');
 
+//let filename = 'input.txt';
 let filename = 'input.txt';
 
 
@@ -30,13 +31,14 @@ let addLine = function(line, grid, greatestDepth) {
     }
 }
     
-let makeGrid = function(input) {
+let makeCave = function(input) {
     let grid = makeEmptyGrid();
     let greatestDepth = {max: 0};
     input.forEach(
         (line) => addLine(line,grid,greatestDepth)
     );
-    return [grid,greatestDepth];
+    return { unBlocked: grid,
+             depth: greatestDepth.max};
 }
 
 // Read input
@@ -49,27 +51,28 @@ let input = fs
         .map( (point) => point.split(",")
         .map( (coordinate) => parseInt(coordinate))));
 
-let [grid, greatestDepth] = makeGrid(input);
-
 // Part 1
-let x = 500;
-let y = 0;
+let cave = makeCave(input);
+let falling = {
+    x: 500,
+    y: 0
+};
 let nGrains = 0;
 
-while (y < greatestDepth.max+2) {
-    if (grid[x][y+1]) {
-        y++;
-    } else if (grid[x-1][y+1] ) {
-        y++;
-        x--;
-    } else if (grid[x+1][y+1] ) {
-        y++;
-        x++;
+while (falling.y < cave.depth+2) {
+    if (cave.unBlocked[falling.x][falling.y+1]) {
+        falling.y++;
+    } else if (cave.unBlocked[falling.x-1][falling.y+1] ) {
+        falling.y++;
+        falling.x--;
+    } else if (cave.unBlocked[falling.x+1][falling.y+1] ) {
+        falling.y++;
+        falling.x++;
     } else {
-        grid[x][y] = false;
+        cave.unBlocked[falling.x][falling.y] = false;
         nGrains++;
-        x = 500;
-        y = 0;
+        falling.x = 500;
+        falling.y = 0;
     }
 }
 
@@ -78,30 +81,30 @@ console.log(`Solution to part 1: ${p1}`);
 
 
 //Part 2
-[grid, greatestDepth] = makeGrid(input);
-x = 500;
-y = 0;
+cave = makeCave(input);
+falling.x = 500;
+falling.y = 0;
 nGrains = 0;
 
-while (grid[500][0]) {
-    if (y == greatestDepth.max+1) {
-        grid[x][y] = false;
+while (cave.unBlocked[500][0]) {
+    if (falling.y == cave.depth+1){
+        cave.unBlocked[falling.x][falling.y] = false;
         nGrains++;
-        x = 500;
-        y = 0;
-    } else if (grid[x][y+1]) {
-        y++;
-    } else if (grid[x-1][y+1] ) {
-        y++;
-        x--;
-    } else if (grid[x+1][y+1] ) {
-        y++;
-        x++;
+        falling.x = 500;
+        falling.y = 0;
+    } else if (cave.unBlocked[falling.x][falling.y+1]) {
+        falling.y++;
+    } else if (cave.unBlocked[falling.x-1][falling.y+1] ) {
+        falling.y++;
+        falling.x--;
+    } else if (cave.unBlocked[falling.x+1][falling.y+1] ) {
+        falling.y++;
+        falling.x++;
     } else {
-        grid[x][y] = false;
+        cave.unBlocked[falling.x][falling.y] = false;
         nGrains++;
-        x = 500;
-        y = 0;
+        falling.x = 500;
+        falling.y = 0;
     }
 }
 let p2 = nGrains;
