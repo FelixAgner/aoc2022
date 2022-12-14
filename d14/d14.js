@@ -56,59 +56,75 @@ let input = fs
 
 // Part 1
 let cave = makeCave(input);
-let falling = {
-    x: 500,
-    y: 0
-};
+
+let x = 500;
+let y = 0;
+let xlist = [];
+let ylist = [];
 let nGrains = 0;
 
-while (falling.y != cave.depth+1) {
-    if (cave.unBlocked[falling.x][falling.y+1]) {
-        falling.y++;
-    } else if (cave.unBlocked[falling.x-1][falling.y+1] ) {
-        falling.y++;
-        falling.x--;
-    } else if (cave.unBlocked[falling.x+1][falling.y+1] ) {
-        falling.y++;
-        falling.x++;
+
+while (y != cave.depth+1) {
+    if (cave.unBlocked[x][y+1]) {
+        xlist.push(x);
+        ylist.push(y);
+        y++;
+    } else if (cave.unBlocked[x-1][y+1] ) {
+        xlist.push(x);
+        ylist.push(y);
+        y++;
+        x--;
+    } else if (cave.unBlocked[x+1][y+1] ) {
+        xlist.push(x);
+        ylist.push(y);
+        y++;
+        x++;
     } else {
-        cave.unBlocked[falling.x][falling.y] = false;
+        cave.unBlocked[x][y] = false;
         nGrains++;
-        falling.x = 500;
-        falling.y = 0;
+        x = xlist.pop();
+        y = ylist.pop();
     }
 }
-cave.unBlocked[falling.x][falling.y] = false;
+
+
+cave.unBlocked[x][y] = false;
 let p1 = nGrains;
 console.log(`Solution to part 1: ${p1}`);
 
 
 //Part 2
 nGrains++;
-falling.x = 500;
-falling.y = 0;
-
+x = xlist.pop();
+y = ylist.pop();
 while (cave.unBlocked[500][0]) {
-    if (falling.y == cave.depth+1){
-        cave.unBlocked[falling.x][falling.y] = false;
+    if (y == cave.depth+1){
+        cave.unBlocked[x][y] = false;
         nGrains++;
-        falling.x = 500;
-        falling.y = 0;
-    } else if (cave.unBlocked[falling.x][falling.y+1]) {
-        falling.y++;
-    } else if (cave.unBlocked[falling.x-1][falling.y+1] ) {
-        falling.y++;
-        falling.x--;
-    } else if (cave.unBlocked[falling.x+1][falling.y+1] ) {
-        falling.y++;
-        falling.x++;
+        x = xlist.pop();
+        y = ylist.pop();
+    } else if (cave.unBlocked[x][y+1]) {
+        xlist.push(x);
+        ylist.push(y);
+        y++;
+    } else if (cave.unBlocked[x-1][y+1] ) {
+        xlist.push(x);
+        ylist.push(y);
+        y++;
+        x--;
+    } else if (cave.unBlocked[x+1][y+1] ) {
+        xlist.push(x);
+        ylist.push(y);
+        y++;
+        x++;
     } else {
-        cave.unBlocked[falling.x][falling.y] = false;
+        cave.unBlocked[x][y] = false;
         nGrains++;
-        falling.x = 500;
-        falling.y = 0;
+        x = xlist.pop();
+        y = ylist.pop();
     }
 }
+
 let p2 = nGrains;
 console.log(`Solution to part 2: ${p2}`);
 
