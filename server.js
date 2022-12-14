@@ -1,7 +1,8 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-const {makeErrorPage} = require('./makeErrorPage') 
+const {makeErrorPage} = require('./makeErrorPage');
+const {makeTimePage} = require('./makeTimePage');
 
 let getSolution = function(query) {
     let day = query >= 10 ? "d" + query : "d0"+query
@@ -19,6 +20,10 @@ let handleRequest = function(req,res) {
             res.write(data);
             return res.end();
           });
+    } else if (q.pathname == '/times') {
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(makeTimePage());
+        return res.end();
     } else if (q.pathname == '/problems') {
         let query = JSON.parse('{"' + q.search.replace(/&/g, '","').replace(/=/g,'":"').replace('?','') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
         day = parseInt(query.day);
