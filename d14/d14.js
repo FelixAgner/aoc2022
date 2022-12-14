@@ -3,6 +3,10 @@ const fs = require('fs');
 const path = require('path');
 const { addListener } = require('process');
 
+console.log(`
+======================
+        Day 14
+======================`)
 let filename = 'input.txt';
 
 
