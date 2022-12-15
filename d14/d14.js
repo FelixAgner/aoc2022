@@ -1,3 +1,6 @@
+// Start timer
+let t0 = new Date();
+
 const { sign } = require('crypto');
 const fs = require('fs');
 const path = require('path');
@@ -9,9 +12,6 @@ console.log(`
 ======================`)
 let filename = 'input.txt';
 
-
-// Start timer
-let t0 = new Date();
 
 let makeEmptyGrid = function() {
     let grid = new Array(1000);
@@ -90,7 +90,6 @@ while (y != cave.depth+1) {
 
 cave.unBlocked[x][y] = false;
 let p1 = nGrains;
-console.log(`Solution to part 1: ${p1}`);
 
 
 //Part 2
@@ -126,10 +125,11 @@ while (cave.unBlocked[500][0]) {
 }
 
 let p2 = nGrains;
+
+
+// End timer and log results
+console.log(`Solution to part 1: ${p1}`);
 console.log(`Solution to part 2: ${p2}`);
-
-
-// End timer
 let t1 = new Date();
 let t = t1.getTime() - t0.getTime();
 console.log(`Solution time: ${t} ms`);
