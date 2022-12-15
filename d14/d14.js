@@ -1,10 +1,8 @@
 // Start timer
 let t0 = new Date();
 
-const { sign } = require('crypto');
 const fs = require('fs');
 const path = require('path');
-const { addListener } = require('process');
 
 console.log(`
 ======================
