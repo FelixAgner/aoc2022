@@ -1,3 +1,6 @@
+// Start timer
+let t0 = new Date();
+
 const fs = require('fs');
 const path = require('path');
 let filename = 'input.txt';
@@ -35,9 +38,6 @@ let makeInstructions = function(str) {
     }
     return instructions;
 }
-
-// Start timer
-let t0 = new Date();
 
 // Array of each row of the input
 let [initial, instructions] = fs

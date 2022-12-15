@@ -1,3 +1,6 @@
+// Start timer
+let t0 = new Date();
+
 const fs = require('fs');
 const path = require('path');
 
@@ -13,8 +16,7 @@ let readTotalCals = function (pack) {
     return totalCals;
 }
 
-// Start timer
-let t0 = new Date();
+
 
 let calories = fs
 	.readFileSync(path.join(__dirname, filename), 'utf8')   // Read file

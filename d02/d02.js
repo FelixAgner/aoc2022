@@ -1,3 +1,6 @@
+// Start timer
+let t0 = new Date();
+
 const fs = require('fs');
 const path = require('path');
 
@@ -35,9 +38,6 @@ let calculateRealScore = function (round) {
     let you = (them + 2 + result) % 3;
     return 3*result + you+1;
 }
-
-// Start timer
-let t0 = new Date();
 
 // Array of each row of the input
 let roundInstructions = fs

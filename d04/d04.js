@@ -1,3 +1,6 @@
+// Start timer
+let t0 = new Date();
+
 const fs = require('fs');
 const path = require('path');
 
@@ -16,9 +19,6 @@ let fullyOverlaps = function(pair) {
 let isOverlapping = function(pair) {
     return !( pair[1] < pair[2] || pair[0] > pair[3]);
 }
-
-// Start timer
-let t0 = new Date();
 
 // Array of each row of the input
 let pairs = fs

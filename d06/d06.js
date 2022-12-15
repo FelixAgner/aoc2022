@@ -1,3 +1,6 @@
+// Start timer
+let t0 = new Date();
+
 const fs = require('fs');
 const path = require('path');
 let filename = 'input.txt';
@@ -20,9 +23,6 @@ let getStartOfPacketMarker = function(str) {
 let getMessage = function(str) {
     return getFirstUniqueSet(str, 14);
 }
-
-// Start timer
-let t0 = new Date();
 
 // Array of each row of the input
 let buffer = fs
