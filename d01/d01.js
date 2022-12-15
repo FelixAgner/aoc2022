@@ -1,5 +1,9 @@
 // Start timer
 let t0 = new Date();
+console.log(`
+======================
+        Day 1
+======================`)
 
 const fs = require('fs');
 const path = require('path');
@@ -34,9 +38,12 @@ let p2 = calories
     .slice(0,3)              //Grab first three elements
     .reduce((a,b) => a+b,0);    // Sum them
 
-// End timer
+// End timer and log results
+console.log(`Solution to part 1: ${p1}`);
+console.log(`Solution to part 2: ${p2}`);
 let t1 = new Date();
 let t = t1.getTime() - t0.getTime();
+console.log(`Solution time: ${t} ms`);
 
 module.exports = {
     p1, // Part 1

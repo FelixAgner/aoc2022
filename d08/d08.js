@@ -1,3 +1,10 @@
+// Start timer
+let t0 = new Date();
+console.log(`
+======================
+        Day 8
+======================`)
+
 const fs = require('fs');
 const path = require('path');
 let filename = 'input.txt';
@@ -107,9 +114,6 @@ let getBestViewingDistance = function(forest) {
     }
     return bestView;
 }
-
-// Start timer
-let t0 = new Date();
 
 // Read input
 let forest = fs

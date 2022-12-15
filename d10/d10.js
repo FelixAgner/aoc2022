@@ -1,11 +1,15 @@
+// Start timer
+let t0 = new Date();
+console.log(`
+======================
+        Day 10
+======================`)
+
 const fs = require('fs');
 const path = require('path');
 
 let filename = 'input.txt';
 
-
-// Start timer
-let t0 = new Date();
 
 // Read input
 let commands = fs
@@ -29,13 +33,11 @@ for (command of commands) {
         cycle+=2;
     }
     if ( cycle >= nextlog && cycle < 230){
-        console.log( nextlog * currentVal );
         p1 += nextlog * currentVal;
         nextlog += 40;
     }
 
     if (command[0] != "noop") {
-        //console.log(`Add: ${command[1]}`);
         currentVal += parseInt(command[1]);
     }
 }

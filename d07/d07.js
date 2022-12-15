@@ -1,3 +1,10 @@
+// Start timer
+let t0 = new Date();
+console.log(`
+======================
+        Day 7
+======================`)
+
 const fs = require('fs');
 const path = require('path');
 let filename = 'input.txt';
@@ -79,9 +86,6 @@ let getMinimumSizes = function(input, threshold) {
     return [thisDirsTotalSize, minimumSize, remainingCommands];
 
 }
-
-// Start timer
-let t0 = new Date();
 
 // Array of each row of the input
 let commandLineLog = fs

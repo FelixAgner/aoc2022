@@ -1,3 +1,6 @@
+// Start timer
+let t0 = new Date();
+
 const fs = require('fs');
 const path = require('path');
 
@@ -7,9 +10,6 @@ console.log(`
 ======================`)
 let filename = 'input.txt';
 
-
-// Start timer
-let t0 = new Date();
 
 let manhattan = function(sensor,beacon) {
     return Math.abs(beacon.x-sensor.x) + Math.abs(beacon.y-sensor.y);
@@ -103,9 +103,10 @@ let sensors = fs
     .map( (line) => parseLine(line));
 
 // Part 1
+// Assume that part one only gives one range of invalid positions, and that no beacons are logged
+// in that range (because that's the case in my data)
 let [range] = getRange(sensors, 10);
 let p1 = range[1] - range[0];
-console.log(`Solution to part 1: ${p1}`);
 
 
 //Part 2
@@ -122,10 +123,10 @@ while (y <= 4000000 && !foundit) {
     y++;
 }
 
+
+// End timer and log results
+console.log(`Solution to part 1: ${p1}`);
 console.log(`Solution to part 2: ${p2}`);
-
-
-// End timer
 let t1 = new Date();
 let t = t1.getTime() - t0.getTime();
 console.log(`Solution time: ${t} ms`);

@@ -1,11 +1,14 @@
+// Start timer
+let t0 = new Date();
+console.log(`
+======================
+        Day 11
+======================`)
+
 const fs = require('fs');
 const path = require('path');
 
 let filename = 'input.txt';
-
-
-// Start timer
-let t0 = new Date();
 
 let makeOperation = function(inp) {
     let args = inp.split(" ");

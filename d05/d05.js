@@ -1,5 +1,9 @@
 // Start timer
 let t0 = new Date();
+console.log(`
+======================
+        Day 5
+======================`)
 
 const fs = require('fs');
 const path = require('path');

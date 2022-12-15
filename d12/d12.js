@@ -1,11 +1,14 @@
+// Start timer
+let t0 = new Date();
+console.log(`
+======================
+        Day 12
+======================`)
+
 const fs = require('fs');
 const path = require('path');
 
 let filename = 'input.txt';
-
-
-// Start timer
-let t0 = new Date();
 
 let makeGrid = function(textGrid) {
     let nx = textGrid.length;

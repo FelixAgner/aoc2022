@@ -1,5 +1,9 @@
 // Start timer
 let t0 = new Date();
+console.log(`
+======================
+        Day 6
+======================`)
 
 const fs = require('fs');
 const path = require('path');
@@ -41,12 +45,12 @@ let p1 = getStartOfPacketMarker(buffer);
 let p2 = getMessage(buffer);
 
 
-console.log(p1);
-console.log(p2);
-
 // End timer
 let t1 = new Date();
 let t = t1.getTime() - t0.getTime();
+console.log(`Solution to part 1: ${p1}`);
+console.log(`Solution to part 2: ${p2}`);
+console.log(`Solution time: ${t} ms`);
 
 module.exports = {
     p1, // Part 1

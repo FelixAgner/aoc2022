@@ -1,12 +1,16 @@
+// Start timer
+let t0 = new Date();
+console.log(`
+======================
+        Day 13
+======================`)
+
 const fs = require('fs');
 const path = require('path');
 const {WeirdNumber} = require('./weirdnumber');
 
 let filename = 'input.txt';
 
-
-// Start timer
-let t0 = new Date();
 
 // Read input
 let pairs = fs
@@ -25,7 +29,6 @@ for (let i = 0 ; i < pairs.length ; i++) {
     let comparison = pairs[i][0].compare(pairs[i][1]);
     p1 += Math.max((i+1)*comparison,0);
 }
-console.log(`Solution to part 1: ${p1}`);
 
 
 //Part 2
@@ -44,10 +47,11 @@ while (i==0 || j ==0 ){
 }
 
 let p2 = i*j;
+
+
+// End timer and log results
+console.log(`Solution to part 1: ${p1}`);
 console.log(`Solution to part 2: ${p2}`);
-
-
-// End timer
 let t1 = new Date();
 let t = t1.getTime() - t0.getTime();
 console.log(`Solution time: ${t} ms`);
