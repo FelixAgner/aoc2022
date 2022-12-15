@@ -38,6 +38,62 @@ let overlap = function(range1, range2) {
             (range1[0] <= range2[0] && range1[1] >= range2[1] );
 }
 
+let getRange = function(sensors, y) {
+    let ranges = [];
+    let beaconsOnLine = []
+    for (let sensor of sensors) {
+        let dy = sensor.dist - Math.abs(sensor.y-y);
+        if  (dy >= 0) {
+            let newrange = [sensor.x-dy,sensor.x+dy]
+            let notAdded = true;
+            for (let range of ranges) {
+                if (overlap(range, newrange)) {
+                    range[0] = Math.min(range[0],newrange[0]);
+                    range[1] = Math.max(range[1],newrange[1]);
+                    notAdded = false;
+                }
+            }
+            if (notAdded) {ranges.push(newrange)};
+        }
+        if (sensor.closest.y == y ) {
+            beaconsOnLine.push(sensor.beacon);
+        }
+    }
+
+    let anyChange = true;
+    while (anyChange) {
+        anyChange = false;
+        for (let i = 1 ; i < ranges.length; i++) {
+            let currentrange = ranges.shift();
+            for (let range of ranges) {
+                if (overlap(range,currentrange)) {
+                    range[0] = Math.min(range[0],currentrange[0]);
+                    range[1] = Math.max(range[1],currentrange[1]);
+                    anyChange = true;                    
+                }
+            }
+            if (!anyChange) {ranges.push(currentrange)};
+        }
+    }
+    return ranges;
+}
+
+let getPossibleRange = function(ranges) {
+    let possibleRange = [0, 4000000];
+    for (let range of ranges) {
+        if (range[0] > possibleRange[0] && range[1] < possibleRange[1]) {
+            return false;
+        } else if (range[0] <= possibleRange[0] && range[1] >= possibleRange[1])  {
+            return false;
+        } else if (range[0] <= possibleRange[0] && range[1] >= possibleRange[0]) {
+            possibleRange[0] = range[1] + 1;
+        } else if (range[0] <= possibleRange[1] && range[1] >= possibleRange[1]) {
+            possibleRange[1] = range[0] - 1;
+        }
+    }
+    return possibleRange;
+}
+
 // Read input
 let sensors = fs
     .readFileSync(path.join(__dirname, filename), 'utf8') 
@@ -47,38 +103,25 @@ let sensors = fs
     .map( (line) => parseLine(line));
 
 // Part 1
-let ranges = [];
-let beaconsOnLine = []
-for (sensor of sensors) {
-    let dy = sensor.dist - Math.abs(sensor.y-2000000);
-    if  (dy >= 0) {
-        let newrange = [sensor.x-dy,sensor.x+dy]
-        let notAdded = true;
-        for (range of ranges) {
-            if (overlap(range, newrange)) {
-                range[0] = Math.min(range[0],newrange[0]);
-                range[1] = Math.max(range[1],newrange[1]);
-                notAdded = false;
-            }
-        }
-        if (notAdded) {ranges.push(newrange)};
-    }
-    if (sensor.closest.y == 2000000 ) {
-        beaconsOnLine.push(sensor.beacon);
-    }
-}
-
-if (overlap(ranges[1],ranges[0])) {
-    ranges[0][0] = Math.min(ranges[0][0],ranges[1][0]);
-    ranges[0][1] = Math.max(ranges[0][1],ranges[1][1]);
-}
-console.log(ranges);
-let p1 = ranges[0][1] - ranges[0][0];
+let [range] = getRange(sensors, 10);
+let p1 = range[1] - range[0];
 console.log(`Solution to part 1: ${p1}`);
 
 
 //Part 2
+let foundit = false;
+let y = 0;
 let p2 = 0;
+while (y <= 4000000 && !foundit) {
+    let ranges = getRange(sensors, y);
+    let possibleRange = getPossibleRange(ranges);
+    if (possibleRange && possibleRange[0] == possibleRange[1]) {
+        p2 = possibleRange[0]*4000000 + y;
+        foundit = true;
+    }
+    y++;
+}
+
 console.log(`Solution to part 2: ${p2}`);
 
 
